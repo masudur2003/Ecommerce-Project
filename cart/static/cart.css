@@ -1,0 +1,18 @@
+body {
+    background: #f8f9fa;
+}
+
+h2 {
+    font-weight: bold;
+}
+
+.table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.cart-summary {
+    background: white;
+    border-radius: 10px;
+}

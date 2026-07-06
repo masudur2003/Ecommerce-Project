@@ -38,7 +38,7 @@
 
                     <p>Stock : {{ product.stock }}</p>
 
-                    <a href="#" class="btn btn-success">
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success">
     Add to Cart
 </a>
                     
