@@ -1,0 +1,44 @@
+body {
+    background-color: #f8f9fa;
+}
+
+/* Navbar brand */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+/* Hero section */
+.hero {
+    background: linear-gradient(to right, #4e54c8, #8f94fb);
+    color: white;
+    padding: 60px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Product card hover effect */
+.card {
+    transition: 0.3s;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.2);
+}
+
+/* Button style */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Footer */
+footer {
+    font-size: 14px;
+}

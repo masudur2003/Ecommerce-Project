@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - MyShop{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="p-5 mb-4 bg-light rounded-3 text-center">
+    <h1>Welcome to MyShop 🛒</h1>
+    <p>Best Products at Affordable Price</p>
+    <a href="{% url 'services' %}" class="btn btn-primary">Shop Now</a>
+</div>
+
+<!-- Products Section -->
+<div class="container mt-5">
+
+    <div class="row">
+
+        {% for product in products %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card h-100">
+
+                <img src="{{ product.image }}"
+                    class="card-img-top"
+                    alt="{{ product.name }}"
+                    style="height:300px; object-fit:cover;">
+     
+
+                <div class="card-body">
+
+                    <h4>{{ product.name }}</h4>
+
+                    <p>{{ product.description }}</p>
+
+                    <h5>৳ {{ product.price }}</h5>
+
+                    <p>Stock : {{ product.stock }}</p>
+
+                    <a href="#" class="btn btn-success">
+    Add to Cart
+</a>
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
