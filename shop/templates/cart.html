@@ -40,17 +40,17 @@
                     <td>৳ {{ product.price }}</td>
 
                     <td>
-                        <a href="{% url 'decrease_quantity' product.id %}" class="btn btn-warning btn-sm">-</a>
+                        <a href="{% url 'cart:decrease_quantity' product.id %}" class="btn btn-warning btn-sm">-</a>
 
                         <span class="mx-2">{{ product.quantity }}</span>
 
-                        <a href="{% url 'increase_quantity' product.id %}" class="btn btn-success btn-sm">+</a>
+                        <a href="{% url 'cart:increase_quantity' product.id %}" class="btn btn-success btn-sm">+</a>
                     </td>
 
                     <td>৳ {{ product.total_price }}</td>
 
                     <td>
-                        <a href="{% url 'remove_from_cart' product.id %}"
+                        <a href="{% url 'cart:remove_from_cart' product.id %}"
                            class="btn btn-danger btn-sm remove-btn">
                            Remove
                         </a>

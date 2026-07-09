@@ -16,7 +16,7 @@ def add_to_cart(request, product_id):
 
     request.session['cart'] = cart
 
-    return redirect('cart')
+    return redirect('cart:cart')
 
 
 
@@ -53,7 +53,7 @@ def increase_quantity(request, product_id):
 
     request.session["cart"] = cart
 
-    return redirect("cart")
+    return redirect("cart:cart")
 
 
 
@@ -70,7 +70,7 @@ def decrease_quantity(request, product_id):
 
     request.session["cart"] = cart
 
-    return redirect("cart")
+    return redirect("cart:cart")
 
 
 
@@ -84,7 +84,7 @@ def remove_from_cart(request, product_id):
 
     request.session["cart"] = cart
 
-    return redirect("cart")
+    return redirect("cart:cart")
 
 
 
