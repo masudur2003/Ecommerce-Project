@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
 
-    <a class="navbar-brand" href="{% url 'home' %}">MyShop</a>
+    <a class="navbar-brand" href="{% url 'shop:home' %}">MyShop</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -12,19 +12,19 @@
       <ul class="navbar-nav ms-auto">
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' %}">Home</a>
+          <a class="nav-link" href="{% url 'shop:home' %}">Home</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'about' %}">About</a>
+          <a class="nav-link" href="{% url 'shop:about' %}">About</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'services' %}">Services</a>
+          <a class="nav-link" href="{% url 'shop:services' %}">Services</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+          <a class="nav-link" href="{% url 'shop:contact' %}">Contact</a>
         </li>
 
       </ul>
