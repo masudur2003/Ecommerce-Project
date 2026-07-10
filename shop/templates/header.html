@@ -1,34 +1,291 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-    <a class="navbar-brand" href="{% url 'shop:home' %}">MyShop</a>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <title>MyShop</title>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
-      <ul class="navbar-nav ms-auto">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'shop:home' %}">Home</a>
-        </li>
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"/>
 
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'shop:about' %}">About</a>
-        </li>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
 
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'shop:services' %}">Services</a>
-        </li>
+</head>
+<body>
 
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'shop:contact' %}">Contact</a>
-        </li>
+<!-- ================= HEADER START ================= -->
 
-      </ul>
+<header id="header">
 
-    </div>
-  </div>
+<!-- ========= TOP NAVBAR ========= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+
+<div class="container">
+
+<!-- Logo -->
+
+<a class="navbar-brand fw-bold fs-3" href="#">
+<i class="fa-solid fa-cart-shopping"></i>
+MyShop
+</a>
+
+<!-- Mobile Button -->
+
+<button class="navbar-toggler"
+type="button"
+data-bs-toggle="offcanvas"
+data-bs-target="#mobileMenu">
+
+<span class="navbar-toggler-icon"></span>
+
+</button>
+
+<!-- Desktop Menu -->
+
+<div class="collapse navbar-collapse d-none d-lg-flex">
+
+<ul class="navbar-nav me-auto ms-4">
+
+<li class="nav-item">
+<a class="nav-link active" href="{% url 'shop:home' %}">Home</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'shop:home' %}">Products</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'shop:services' %}">Services</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'shop:contact' %}">Contact</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="{% url 'shop:about' %}">About</a>
+</li>
+
+</ul>
+
+<div class="d-flex align-items-center gap-3">
+
+<button class="btn btn-warning position-relative">
+
+<i class="fa-solid fa-cart-shopping"></i>
+
+Cart
+
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+0
+
+</span>
+
+</button>
+
+<button class="btn btn-outline-light">
+
+<i class="fa-solid fa-user"></i>
+
+Login
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 </nav>
+
+<!-- ========= SECOND NAVBAR ========= -->
+
+<div class="bg-white shadow-sm border-bottom">
+
+<div class="container py-3">
+
+<div class="row align-items-center">
+
+<!-- Category -->
+
+<div class="col-lg-3 mb-2 mb-lg-0">
+
+<div class="dropdown w-100">
+
+<button
+class="btn btn-primary dropdown-toggle w-100"
+data-bs-toggle="dropdown">
+
+<i class="fa-solid fa-list"></i>
+
+All Categories
+
+</button>
+
+<ul class="dropdown-menu w-100">
+
+{% for category in categories %}
+
+<li>
+    <a class="dropdown-item" 
+       href="{% url 'shop:category_products' category.slug %}">
+        
+        {{ category.name }}
+
+    </a>
+</li>
+
+{% empty %}
+
+<li>
+    <span class="dropdown-item">
+        No Category Available
+    </span>
+</li>
+
+{% endfor %}
+
+</ul>
+</div>
+
+</div>
+
+<!-- Search -->
+
+<div class="col-lg-6">
+
+<div class="input-group">
+
+<input
+type="search"
+id="searchInput"
+class="form-control"
+placeholder="Search Products...">
+
+<button
+class="btn btn-primary"
+id="searchBtn">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Search
+
+</button>
+
+</div>
+
+</div>
+
+<!-- Right Side -->
+
+<div class="col-lg-3 text-end d-none d-lg-block">
+
+<button class="btn btn-light border me-2">
+
+<i class="fa-regular fa-heart"></i>
+
+Wishlist
+
+</button>
+
+<button
+class="btn btn-dark"
+id="themeToggle">
+
+<i class="fa-solid fa-moon"></i>
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- ================= MOBILE MENU ================= -->
+
+<div class="offcanvas offcanvas-start"
+tabindex="-1"
+id="mobileMenu">
+
+<div class="offcanvas-header">
+
+<h5>MyShop</h5>
+
+<button
+class="btn-close"
+data-bs-dismiss="offcanvas">
+</button>
+
+</div>
+
+<div class="offcanvas-body">
+
+<ul class="navbar-nav">
+
+<li><a class="nav-link" href="{% url 'shop:home' %}">Home</a></li>
+
+<li><a class="nav-link" href="{% url 'shop:home' %}">Products</a></li>
+
+<li><a class="nav-link" href="{% url 'shop:services' %}">Services</a></li>
+
+<li><a class="nav-link" href="{% url 'shop:contact' %}">Contact</a></li>
+
+<li><a class="nav-link" href="{% url 'shop:about' %}">About</a></li>
+
+<hr>
+
+<li>
+
+<button class="btn btn-warning w-100 mb-2">
+
+Cart
+
+</button>
+
+</li>
+
+<li>
+
+<button class="btn btn-dark w-100">
+
+Login
+
+</button>
+
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+
+<script src="js/script.js"></script>
+
+</body>
+</html>

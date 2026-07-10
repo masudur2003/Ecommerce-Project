@@ -12,22 +12,6 @@
 </div>
 
 
-        <!-- Category Sidebar -->
-        <div class="col-md-3">
-            <h4 class="mb-3">Categories</h4>
-
-            <ul class="list-group">
-                {% for category in categories %}
-                <li class="list-group-item">
-                    <a href="{% url 'shop:category_products' category.slug %}"
-                       class="text-decoration-none">
-                        {{ category.name }}
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-
 
 <!-- Products Section -->
 <div class="container mt-5">

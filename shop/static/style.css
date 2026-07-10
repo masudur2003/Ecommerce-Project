@@ -3,10 +3,385 @@ body {
 }
 
 /* Navbar brand */
-.navbar-brand {
-    font-weight: bold;
-    font-size: 22px;
+/* =====================================
+        GOOGLE FONT
+===================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* =====================================
+        ROOT COLORS
+===================================== */
+
+:root{
+
+    --primary:#0d6efd;
+    --secondary:#212529;
+    --warning:#ffc107;
+    --light:#f8f9fa;
+    --white:#ffffff;
+    --border:#e9ecef;
+    --text:#444;
+    --shadow:0 10px 30px rgba(0,0,0,.08);
+    --transition:.35s ease;
+
 }
+
+/* =====================================
+        RESET
+===================================== */
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+    background:#f5f6fa;
+    color:var(--text);
+
+}
+
+/* =====================================
+        TOP NAVBAR
+===================================== */
+
+.navbar{
+
+    background:linear-gradient(90deg,#111,#222);
+    box-shadow:var(--shadow);
+
+}
+
+.navbar-brand{
+
+    font-size:32px;
+    font-weight:700;
+    letter-spacing:1px;
+
+}
+
+.navbar-brand i{
+
+    color:var(--warning);
+    margin-right:8px;
+
+}
+
+.nav-link{
+
+    color:#fff !important;
+    margin:0 10px;
+    font-weight:500;
+    position:relative;
+    transition:var(--transition);
+
+}
+
+/* Underline Hover */
+
+.nav-link::after{
+
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-5px;
+
+    width:0%;
+    height:2px;
+
+    background:var(--warning);
+
+    transition:.4s;
+
+}
+
+.nav-link:hover::after{
+
+    width:100%;
+
+}
+
+.nav-link:hover{
+
+    color:var(--warning)!important;
+
+}
+
+/* =====================================
+        CART BUTTON
+===================================== */
+
+.btn-warning{
+
+    border-radius:50px;
+    padding:10px 22px;
+    font-weight:600;
+    transition:.3s;
+
+}
+
+.btn-warning:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* =====================================
+        LOGIN BUTTON
+===================================== */
+
+.btn-outline-light{
+
+    border-radius:50px;
+    padding:10px 20px;
+
+}
+
+/* =====================================
+        SECOND NAVBAR
+===================================== */
+
+.border-bottom{
+
+    background:#fff;
+    box-shadow:0 5px 15px rgba(0,0,0,.05);
+
+}
+
+/* =====================================
+        CATEGORY
+===================================== */
+
+.dropdown-toggle{
+
+    height:52px;
+    border-radius:10px;
+    font-weight:600;
+
+}
+
+/* =====================================
+        SEARCH BOX
+===================================== */
+
+.form-control{
+
+    height:52px;
+    border-radius:10px 0 0 10px;
+    border:2px solid var(--primary);
+
+}
+
+.form-control:focus{
+
+    box-shadow:none;
+
+}
+
+.input-group .btn{
+
+    border-radius:0 10px 10px 0;
+    padding:0 28px;
+
+}
+
+/* =====================================
+        WISHLIST
+===================================== */
+
+.btn-light{
+
+    border-radius:50px;
+    transition:.3s;
+
+}
+
+.btn-light:hover{
+
+    background:var(--primary);
+    color:#fff;
+
+}
+
+/* =====================================
+        DARK MODE BUTTON
+===================================== */
+
+#themeToggle{
+
+    width:48px;
+    height:48px;
+    border-radius:50%;
+
+}
+
+/* =====================================
+        OFFCANVAS
+===================================== */
+
+.offcanvas{
+
+    width:280px;
+
+}
+
+.offcanvas-header{
+
+    background:var(--primary);
+    color:#fff;
+
+}
+
+/* =====================================
+        STICKY NAVBAR
+===================================== */
+
+#header{
+
+    position:sticky;
+    top:0;
+    z-index:9999;
+
+}
+
+/* =====================================
+        BADGE
+===================================== */
+
+.badge{
+
+    font-size:12px;
+
+}
+
+/* =====================================
+        BUTTON ANIMATION
+===================================== */
+
+button{
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* =====================================
+        DROPDOWN
+===================================== */
+
+.dropdown-menu{
+
+    border:none;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+
+}
+
+.dropdown-item{
+
+    padding:10px 20px;
+
+}
+
+.dropdown-item:hover{
+
+    background:var(--primary);
+    color:#fff;
+
+}
+
+/* =====================================
+        MOBILE
+===================================== */
+
+@media(max-width:991px){
+
+.navbar-brand{
+
+    font-size:28px;
+
+}
+
+.form-control{
+
+    margin-top:15px;
+
+}
+
+.input-group{
+
+    margin-top:15px;
+
+}
+
+.dropdown{
+
+    margin-bottom:15px;
+
+}
+
+}
+
+/* =====================================
+        DARK MODE
+===================================== */
+
+.dark-mode{
+
+    background:#181818;
+    color:#fff;
+
+}
+
+.dark-mode .border-bottom{
+
+    background:#222;
+
+}
+
+.dark-mode .form-control{
+
+    background:#333;
+    color:#fff;
+    border-color:#555;
+
+}
+
+.dark-mode .dropdown-menu{
+
+    background:#222;
+
+}
+
+.dark-mode .dropdown-item{
+
+    color:#fff;
+
+}
+
+.dark-mode .dropdown-item:hover{
+
+    background:var(--primary);
+
+}
+
 
 /* Hero section */
 .hero {
