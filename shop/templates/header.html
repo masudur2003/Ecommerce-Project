@@ -11,12 +11,22 @@
 
 
 <!-- Logo -->
+<a class="navbar-brand"
+href="{% url 'shop:home' %}">
 
-<a class="navbar-brand fw-bold fs-3" href="{% url 'shop:home' %}">
-    <i class="fa-solid fa-cart-shopping"></i>
-    MyShop
+
+<img src="{% static 'images/logo.png' %}"
+width="60"
+height="60"
+class="rounded-circle">
+
+
+<span class="fw-bold fs-4 text-white ms-2">
+E-Shop
+</span>
+
+
 </a>
-
 
 <!-- Mobile Toggle -->
 
@@ -128,6 +138,15 @@ class="btn btn-outline-light">
 <i class="fa-solid fa-user"></i>
 
 Login
+
+</a>
+
+<a href="{% url 'user_accounts:register' %}"
+class="btn btn-success">
+
+<i class="fa-solid fa-user-plus"></i>
+
+Register
 
 </a>
 
@@ -412,6 +431,19 @@ Logout
 class="btn btn-dark w-100">
 
 Login
+
+</a>
+
+</li>
+
+<li class="mt-2">
+
+<a href="{% url 'user_accounts:register' %}"
+class="btn btn-success w-100">
+
+<i class="fa-solid fa-user-plus"></i>
+
+Register
 
 </a>
 

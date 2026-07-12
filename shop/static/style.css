@@ -392,6 +392,13 @@ button:hover{
     text-align: center;
 }
 
+/* Banner */
+#bannerCarousel .carousel-item img{
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
 /* Product card hover effect */
 .card {
     transition: 0.3s;

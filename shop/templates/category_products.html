@@ -2,35 +2,66 @@
 
 {% block content %}
 
-<h2>{{ category.name }}</h2>
+<div class="container mt-5">
 
-<div class="row">
+    <h2 class="mb-4">{{ category.name }}</h2>
 
-{% for product in products %}
+    <div class="row">
 
-<div class="col-md-3">
+    {% for product in products %}
 
-    <div class="card">
+        <div class="col-md-3 mb-4">
 
-        <img src="{{ product.image }}" class="card-img-top">
+            <div class="card h-100 shadow-sm">
 
-        <div class="card-body">
+                <!-- Product Image -->
+                <a href="{% url 'shop:product_details' product.id %}">
+                    <img src="{{ product.image }}"
+                         class="card-img-top"
+                         alt="{{ product.name }}"
+                         style="height:250px; object-fit:cover;">
+                </a>
 
-            <h5>{{ product.name }}</h5>
+                <div class="card-body d-flex flex-column">
 
-            <p>${{ product.price }}</p>
+                    <!-- Product Name -->
+                    <h5>
+                        <a href="{% url 'shop:product_details' product.id %}"
+                           class="text-decoration-none text-dark">
+                            {{ product.name }}
+                        </a>
+                    </h5>
+
+                    <h6 class="text-success">
+                        ৳ {{ product.price }}
+                    </h6>
+
+                    <div class="mt-auto">
+
+                        <a href="{% url 'shop:product_details' product.id %}"
+                           class="btn btn-primary w-100">
+                            View Details
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
+    {% empty %}
+
+        <div class="col-12">
+            <div class="alert alert-warning">
+                No Product Found.
+            </div>
+        </div>
+
+    {% endfor %}
+
     </div>
-
-</div>
-
-{% empty %}
-
-<p>No Product Found.</p>
-
-{% endfor %}
 
 </div>
 
