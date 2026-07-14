@@ -1,24 +1,33 @@
-from django.shortcuts import render
-from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
+
 from .models import Contact
 from shop.models import Product, Category
 
 
 
-
 def home(request):
+
     products = Product.objects.all()
-    
-    return render(request, "home.html", {
-        "products": products,
-        })
+
+    return render(
+        request,
+        "home.html",
+        {
+            "products": products
+        }
+    )
+
+
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, "about.html")
+
+
 
 def services(request):
-    return render(request, 'services.html')
+    return render(request, "services.html")
+
 
 
 def contact(request):
@@ -31,20 +40,26 @@ def contact(request):
         email = request.POST.get("email")
         message = request.POST.get("message")
 
+
         Contact.objects.create(
             first_name=first_name,
             last_name=last_name,
             phone=phone,
             email=email,
-            message=message,
+            message=message
         )
-        print("Data Saved Successfully")
+
+
     return render(request, "contact.html")
 
 
 
 def product_details(request, id):
-    product = get_object_or_404(Product, id=id)
+
+    product = get_object_or_404(
+        Product,
+        id=id
+    )
 
     return render(
         request,
@@ -56,24 +71,26 @@ def product_details(request, id):
 
 
 
-
-
 def category_products(request, slug):
-    category = get_object_or_404(Category, slug=slug)
 
-    products = Product.objects.filter(category=category)
+    category = get_object_or_404(
+        Category,
+        slug=slug
+    )
 
-    categories = Category.objects.all()
-
-    context = {
-        'category': category,
-        'products': products,
-        'categories': categories,
-    }
-
-    return render(request, 'category_products.html', context)
+    products = Product.objects.filter(
+        category=category
+    )
 
 
+    return render(
+        request,
+        "category_products.html",
+        {
+            "category": category,
+            "products": products
+        }
+    )
 
 
 
@@ -93,23 +110,11 @@ def search(request):
         )
 
 
-    context = {
-        'products': products,
-        'query': query
-    }
-
     return render(
         request,
-        'search_results.html',
-        context
+        "search_results.html",
+        {
+            "products": products,
+            "query": query
+        }
     )
-
-
-
-
-
-
-
-
-
-
