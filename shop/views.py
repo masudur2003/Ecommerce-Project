@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from .models import Contact
 from shop.models import Product, Category
@@ -71,6 +72,37 @@ def category_products(request, slug):
     }
 
     return render(request, 'category_products.html', context)
+
+
+
+
+
+def search(request):
+
+    query = request.GET.get('q')
+
+    products = Product.objects.none()
+
+
+    if query:
+
+        products = Product.objects.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(category__name__icontains=query)
+        )
+
+
+    context = {
+        'products': products,
+        'query': query
+    }
+
+    return render(
+        request,
+        'search_results.html',
+        context
+    )
 
 
 

@@ -1,9 +1,9 @@
-
 {% load static %}
 
 <header>
 
-<!-- ================= TOP NAVBAR ================= -->
+
+<!-- ================= MAIN NAVBAR ================= -->
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
 
@@ -11,26 +11,29 @@
 
 
 <!-- Logo -->
-<a class="navbar-brand"
+
+<a class="navbar-brand d-flex align-items-center"
 href="{% url 'shop:home' %}">
 
-
 <img src="{% static 'images/logo.png' %}"
-width="60"
-height="60"
+width="55"
+height="55"
 class="rounded-circle">
 
 
-<span class="fw-bold fs-4 text-white ms-2">
+<span class="fw-bold fs-3 ms-2">
 E-Shop
 </span>
 
 
 </a>
 
+
+
 <!-- Mobile Toggle -->
 
 <button class="navbar-toggler"
+type="button"
 data-bs-toggle="offcanvas"
 data-bs-target="#mobileMenu">
 
@@ -42,42 +45,47 @@ data-bs-target="#mobileMenu">
 
 <!-- Desktop Menu -->
 
-<div class="collapse navbar-collapse d-none d-lg-flex">
+<div class="collapse navbar-collapse">
 
 
 <ul class="navbar-nav me-auto ms-4">
 
 
 <li class="nav-item">
-<a class="nav-link" href="{% url 'shop:home' %}">
+<a class="nav-link"
+href="{% url 'shop:home' %}">
 Home
 </a>
 </li>
 
 
 <li class="nav-item">
-<a class="nav-link" href="{% url 'shop:home' %}">
+<a class="nav-link"
+href="{% url 'shop:home' %}">
 Products
 </a>
 </li>
 
 
 <li class="nav-item">
-<a class="nav-link" href="{% url 'shop:services' %}">
+<a class="nav-link"
+href="{% url 'shop:services' %}">
 Services
 </a>
 </li>
 
 
 <li class="nav-item">
-<a class="nav-link" href="{% url 'shop:contact' %}">
+<a class="nav-link"
+href="{% url 'shop:contact' %}">
 Contact
 </a>
 </li>
 
 
 <li class="nav-item">
-<a class="nav-link" href="{% url 'shop:about' %}">
+<a class="nav-link"
+href="{% url 'shop:about' %}">
 About
 </a>
 </li>
@@ -87,24 +95,28 @@ About
 
 
 
-<!-- Right Side -->
 
-<div class="d-flex align-items-center gap-3">
+
+<!-- Right Menu -->
+
+
+<div class="d-flex gap-2 align-items-center">
 
 
 <!-- Cart -->
 
 <a href="{% url 'cart:cart' %}"
-class="btn btn-warning position-relative">
+class="btn btn-warning">
 
 
 <i class="fa-solid fa-cart-shopping"></i>
+
 Cart
 
 
-<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+<span class="badge bg-danger">
 
-{{ cart_count|default:0 }}
+{{cart_count|default:0}}
 
 </span>
 
@@ -114,7 +126,27 @@ Cart
 
 
 
-<!-- Login Logout -->
+<!-- Wishlist -->
+
+<a href="{% url 'wishlist:wishlist' %}"
+class="btn btn-light">
+
+
+<i class="fa-solid fa-heart text-danger"></i>
+
+
+<span class="badge bg-danger">
+
+{{wishlist_count|default:0}}
+
+</span>
+
+
+</a>
+
+
+
+
 
 {% if user.is_authenticated %}
 
@@ -135,18 +167,24 @@ Logout
 <a href="{% url 'user_accounts:login' %}"
 class="btn btn-outline-light">
 
+
 <i class="fa-solid fa-user"></i>
 
 Login
 
+
 </a>
+
+
 
 <a href="{% url 'user_accounts:register' %}"
 class="btn btn-success">
 
+
 <i class="fa-solid fa-user-plus"></i>
 
 Register
+
 
 </a>
 
@@ -154,10 +192,12 @@ Register
 {% endif %}
 
 
+
 </div>
 
 
 </div>
+
 
 </div>
 
@@ -167,7 +207,7 @@ Register
 
 
 
-<!-- ================= SECOND NAVBAR ================= -->
+<!-- ================= SECOND BAR ================= -->
 
 
 <div class="bg-white shadow-sm">
@@ -180,12 +220,11 @@ Register
 
 
 
-<!-- Categories -->
-
+<!-- Category -->
 
 <div class="col-lg-3">
 
-{% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'products' %}
+
 <div class="dropdown">
 
 
@@ -195,7 +234,7 @@ data-bs-toggle="dropdown">
 
 <i class="fa-solid fa-list"></i>
 
-All Categories
+Categories
 
 
 </button>
@@ -206,6 +245,7 @@ All Categories
 
 
 {% for category in categories %}
+
 
 <li>
 
@@ -223,13 +263,18 @@ href="{% url 'shop:category_products' category.slug %}">
 
 
 <li>
+
 <span class="dropdown-item">
-No Category Available
+
+No Category Found
+
 </span>
+
 </li>
 
 
 {% endfor %}
+
 
 
 </ul>
@@ -246,24 +291,36 @@ No Category Available
 
 <!-- Search -->
 
+
 <div class="col-lg-6">
 
 
-<form class="input-group">
+<form action="{% url 'shop:search' %}"
+method="GET">
+
+
+<div class="input-group">
 
 
 <input type="search"
+name="q"
 class="form-control"
 placeholder="Search Products...">
 
 
+
 <button class="btn btn-primary">
+
 
 <i class="fa-solid fa-search"></i>
 
 Search
 
+
 </button>
+
+
+</div>
 
 
 </form>
@@ -274,19 +331,10 @@ Search
 
 
 
+<!-- Extra -->
 
-<!-- Extra Button -->
 
 <div class="col-lg-3 text-end">
-
-
-<button class="btn btn-light border">
-
-<i class="fa-regular fa-heart"></i>
-
-Wishlist
-
-</button>
 
 
 <button class="btn btn-dark">
@@ -308,12 +356,6 @@ Wishlist
 </div>
 
 
-{% endif %}
-</header>
-
-
-
-
 
 
 
@@ -326,10 +368,15 @@ id="mobileMenu">
 
 <div class="offcanvas-header">
 
-<h5>
+
+<h5 class="fw-bold">
+
 <i class="fa-solid fa-cart-shopping"></i>
-MyShop
+
+E-Shop
+
 </h5>
+
 
 
 <button class="btn-close"
@@ -337,7 +384,10 @@ data-bs-dismiss="offcanvas">
 
 </button>
 
+
 </div>
+
+
 
 
 
@@ -351,14 +401,6 @@ data-bs-dismiss="offcanvas">
 <a class="nav-link"
 href="{% url 'shop:home' %}">
 Home
-</a>
-</li>
-
-
-<li>
-<a class="nav-link"
-href="{% url 'shop:home' %}">
-Products
 </a>
 </li>
 
@@ -394,9 +436,7 @@ About
 <li>
 
 <a href="{% url 'cart:cart' %}"
-class="btn btn-warning w-100 mb-2">
-
-<i class="fa-solid fa-cart-shopping"></i>
+class="btn btn-warning w-100">
 
 Cart
 
@@ -406,11 +446,10 @@ Cart
 
 
 
-
 {% if user.is_authenticated %}
 
 
-<li>
+<li class="mt-2">
 
 <a href="{% url 'user_accounts:logout' %}"
 class="btn btn-danger w-100">
@@ -425,7 +464,7 @@ Logout
 {% else %}
 
 
-<li>
+<li class="mt-2">
 
 <a href="{% url 'user_accounts:login' %}"
 class="btn btn-dark w-100">
@@ -436,12 +475,11 @@ Login
 
 </li>
 
+
 <li class="mt-2">
 
 <a href="{% url 'user_accounts:register' %}"
 class="btn btn-success w-100">
-
-<i class="fa-solid fa-user-plus"></i>
 
 Register
 
@@ -451,12 +489,17 @@ Register
 
 
 
+{% endif %}
+
+
 
 </ul>
 
-</div>
-
-{% endif %}
 
 </div>
 
+
+</div>
+
+
+</header>
