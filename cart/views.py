@@ -113,7 +113,7 @@ def checkout(request):
             products.append(product)
 
 
-    return render(request, 'cart/checkout.html', {
+    return render(request, 'checkout.html', {
         'products': products,
         'total': total
     })
