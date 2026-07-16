@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+from .models import UserProfile
 from .forms import UserForm, ProfileForm
-
 
 
 # =========================
@@ -25,9 +25,12 @@ def login_view(request):
             password=password
         )
 
-        if user:
+        if user is not None:
 
             login(request, user)
+
+            # Ensure profile exists
+            UserProfile.objects.get_or_create(user=user)
 
             messages.success(
                 request,
@@ -35,7 +38,6 @@ def login_view(request):
             )
 
             return redirect("shop:home")
-
 
         return render(
             request,
@@ -45,12 +47,10 @@ def login_view(request):
             }
         )
 
-
     return render(
         request,
         "login.html"
     )
-
 
 
 # =========================
@@ -70,7 +70,6 @@ def logout_view(request):
     return redirect("shop:home")
 
 
-
 # =========================
 # Register View
 # =========================
@@ -87,7 +86,6 @@ def register_view(request):
         password = request.POST.get("password")
         confirm_password = request.POST.get("confirm_password")
 
-
         if password != confirm_password:
 
             return render(
@@ -97,7 +95,6 @@ def register_view(request):
                     "error": "Password does not match!"
                 }
             )
-
 
         if User.objects.filter(username=username).exists():
 
@@ -109,7 +106,6 @@ def register_view(request):
                 }
             )
 
-
         if User.objects.filter(email=email).exists():
 
             return render(
@@ -120,8 +116,7 @@ def register_view(request):
                 }
             )
 
-
-        user = User.objects.create_user(
+        User.objects.create_user(
             username=username,
             email=email,
             password=password,
@@ -129,29 +124,21 @@ def register_view(request):
             last_name=last_name
         )
 
-
-        # Create Profile Automatically
-        Profile.objects.create(
-            user=user
-        )
-
+        # Profile signals.py থেকে automatically তৈরি হবে
 
         messages.success(
             request,
             "Registration successful"
         )
 
-
         return redirect(
             "user_accounts:login"
         )
-
 
     return render(
         request,
         "register.html"
     )
-
 
 
 # =========================
@@ -161,11 +148,13 @@ def register_view(request):
 @login_required
 def dashboard(request):
 
-    return render(
-        request,
-        "accounts/dashboard.html"
+    UserProfile.objects.get_or_create(
+        user=request.user
     )
 
+    return render(
+        request,"dashboard.html"
+    )
 
 
 # =========================
@@ -175,14 +164,17 @@ def dashboard(request):
 @login_required
 def profile(request):
 
+    UserProfile.objects.get_or_create(
+        user=request.user
+    )
+
     return render(
         request,
-        "accounts/profile.html",
+        "profile.html",
         {
             "user": request.user
         }
     )
-
 
 
 # =========================
@@ -192,10 +184,9 @@ def profile(request):
 @login_required
 def edit_profile(request):
 
-    profile, created = Profile.objects.get_or_create(
+    profile, created = UserProfile.objects.get_or_create(
         user=request.user
     )
-
 
     if request.method == "POST":
 
@@ -204,34 +195,25 @@ def edit_profile(request):
             instance=request.user
         )
 
-
         profile_form = ProfileForm(
             request.POST,
             request.FILES,
             instance=profile
         )
 
-
-        if (
-            user_form.is_valid()
-            and profile_form.is_valid()
-        ):
+        if user_form.is_valid() and profile_form.is_valid():
 
             user_form.save()
-
             profile_form.save()
-
 
             messages.success(
                 request,
                 "Profile updated successfully"
             )
 
-
             return redirect(
                 "user_accounts:profile"
             )
-
 
     else:
 
@@ -239,23 +221,15 @@ def edit_profile(request):
             instance=request.user
         )
 
-
         profile_form = ProfileForm(
             instance=profile
         )
 
-
     context = {
-
         "user_form": user_form,
-
         "profile_form": profile_form
-
     }
 
-
     return render(
-        request,
-        "accounts/edit_profile.html",
-        context
+        request,"edit_profile.html",context,
     )

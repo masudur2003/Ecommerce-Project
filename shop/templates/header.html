@@ -145,52 +145,96 @@ class="btn btn-light">
 </a>
 
 
-
-
-
 {% if user.is_authenticated %}
 
+<div class="dropdown">
 
-<a href="{% url 'user_accounts:logout' %}"
-class="btn btn-danger">
+    <button class="btn btn-outline-light dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown">
 
-<i class="fa-solid fa-right-from-bracket"></i>
+        {% if user.profile.profile_picture %}
+            <img src="{{ user.profile.profile_picture.url }}"
+                 width="32"
+                 height="32"
+                 class="rounded-circle me-2">
+        {% else %}
+            <i class="fa-solid fa-user-circle me-2"></i>
+        {% endif %}
 
-Logout
+        {{ user.first_name|default:user.username }}
 
-</a>
+    </button>
 
+    <ul class="dropdown-menu dropdown-menu-end">
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'user_accounts:dashboard' %}">
+                <i class="fa-solid fa-gauge me-2"></i>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'user_accounts:profile' %}">
+                <i class="fa-solid fa-user me-2"></i>
+                My Profile
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item"
+               href="#">
+                <i class="fa-solid fa-box me-2"></i>
+                My Orders
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item"
+               href="#">
+                <i class="fa-solid fa-location-dot me-2"></i>
+                Address Book
+            </a>
+        </li>
+
+        <li><hr class="dropdown-divider"></li>
+
+        <li>
+            <a class="dropdown-item text-danger"
+               href="{% url 'user_accounts:logout' %}">
+                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
 
 {% else %}
 
-
 <a href="{% url 'user_accounts:login' %}"
 class="btn btn-outline-light">
-
 
 <i class="fa-solid fa-user"></i>
 
 Login
 
-
 </a>
-
-
 
 <a href="{% url 'user_accounts:register' %}"
 class="btn btn-success">
-
 
 <i class="fa-solid fa-user-plus"></i>
 
 Register
 
-
 </a>
 
-
 {% endif %}
-
 
 
 </div>
@@ -448,53 +492,40 @@ Cart
 
 {% if user.is_authenticated %}
 
-
-<li class="mt-2">
-
-<a href="{% url 'user_accounts:logout' %}"
-class="btn btn-danger w-100">
-
-Logout
-
-</a>
-
+<li>
+    <a class="nav-link"
+       href="{% url 'user_accounts:dashboard' %}">
+       Dashboard
+    </a>
 </li>
 
+<li>
+    <a class="nav-link"
+       href="{% url 'user_accounts:profile' %}">
+       My Profile
+    </a>
+</li>
+
+<li>
+    <a class="nav-link"
+       href="#">
+       My Orders
+    </a>
+</li>
+
+<li class="mt-2">
+    <a href="{% url 'user_accounts:logout' %}"
+       class="btn btn-danger w-100">
+       Logout
+    </a>
+
+   
+</li>
 
 {% else %}
 
-
-<li class="mt-2">
-
-<a href="{% url 'user_accounts:login' %}"
-class="btn btn-dark w-100">
-
-Login
-
-</a>
-
-</li>
-
-
-<li class="mt-2">
-
-<a href="{% url 'user_accounts:register' %}"
-class="btn btn-success w-100">
-
-Register
-
-</a>
-
-</li>
-
-
-
-{% endif %}
-
-
-
 </ul>
-
+ {% endif %}
 
 </div>
 

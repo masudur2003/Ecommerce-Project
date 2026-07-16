@@ -6,69 +6,343 @@ My Profile
 {% endblock %}
 
 
+
 {% block content %}
 
 
-<div class="container mt-4">
 
-<div class="card shadow">
-
-<div class="card-body">
+<style>
 
 
-<div class="text-center">
+.profile-container{
 
+    max-width:850px;
+    margin:auto;
+
+}
+
+
+
+.profile-card{
+
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+
+}
+
+
+
+.profile-top{
+
+    height:170px;
+    background:linear-gradient(135deg,#0d6efd,#6610f2);
+
+}
+
+
+
+
+.profile-content{
+
+    margin-top:-80px;
+
+}
+
+
+
+
+.profile-img{
+
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    object-fit:cover;
+    border:6px solid white;
+    box-shadow:0px 5px 20px rgba(0,0,0,.25);
+
+}
+
+
+
+.profile-name{
+
+    font-weight:700;
+    margin-top:15px;
+
+}
+
+
+
+
+.info-box{
+
+    background:#f8f9fa;
+    border-radius:15px;
+    padding:20px;
+    margin-top:25px;
+
+}
+
+
+
+.info-row{
+
+    display:flex;
+    justify-content:space-between;
+    padding:12px;
+    border-bottom:1px solid #ddd;
+
+}
+
+
+
+.info-row:last-child{
+
+    border-bottom:none;
+
+}
+
+
+
+.edit-btn{
+
+    border-radius:30px;
+    padding:10px 40px;
+    font-weight:600;
+
+}
+
+
+
+</style>
+
+
+
+
+<div class="container mt-5 mb-5">
+
+
+<div class="profile-container">
+
+
+
+<div class="card shadow-lg profile-card">
+
+
+
+<!-- Header -->
+
+<div class="profile-top"></div>
+
+
+
+
+<div class="card-body text-center profile-content">
+
+
+
+
+
+<!-- Profile Image -->
+
+
+{% if request.user.profile.profile_picture %}
 
 <img src="{{request.user.profile.profile_picture.url}}"
-class="profile-img mb-3">
+class="profile-img">
 
 
-<h3>
-{{request.user.get_full_name}}
-</h3>
+{% else %}
+
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+class="profile-img">
+
+{% endif %}
 
 
-<p>
-<strong>Email:</strong>
+
+
+
+<h2 class="profile-name">
+
+{{request.user.get_full_name|default:request.user.username}}
+
+</h2>
+
+
+
+<p class="text-muted">
+
+<i class="bi bi-envelope"></i>
+
 {{request.user.email}}
+
 </p>
 
 
-<p>
-<strong>Phone:</strong>
-{{request.user.profile.phone}}
-</p>
 
 
-<p>
-<strong>Date of Birth:</strong>
+
+
+<div class="info-box text-start">
+
+
+
+<div class="info-row">
+
+<strong>
+Email
+</strong>
+
+<span>
+{{request.user.email}}
+</span>
+
+</div>
+
+
+
+
+
+<div class="info-row">
+
+<strong>
+Phone
+</strong>
+
+
+<span>
+
+{{request.user.profile.phone|default:"Not Added"}}
+
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="info-row">
+
+<strong>
+Date of Birth
+</strong>
+
+
+<span>
+
+
+{% if request.user.profile.date_of_birth %}
+
 {{request.user.profile.date_of_birth}}
-</p>
+
+{% else %}
+
+Not Added
+
+{% endif %}
 
 
-<p>
-<strong>Gender:</strong>
-{{request.user.profile.gender}}
-</p>
+</span>
+
+
+</div>
 
 
 
-<a href="{% url 'accounts:edit_profile' %}"
-class="btn btn-primary">
+
+
+
+<div class="info-row">
+
+
+<strong>
+Gender
+</strong>
+
+
+<span>
+
+{{request.user.profile.gender|default:"Not Added"}}
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<a href="{% url 'user_accounts:edit_profile' %}"
+
+class="btn btn-primary edit-btn mt-4">
+
+
+<i class="bi bi-pencil-square"></i>
 
 Edit Profile
+
 
 </a>
 
 
+
+
+</div>
+
+
 </div>
 
 
 </div>
 
-</div>
 
 </div>
+
+
+
+
+
+
+
+<script>
+
+
+// Profile Image Animation
+
+let profileImage=document.querySelector(".profile-img");
+
+
+profileImage.addEventListener("mouseenter",function(){
+
+    this.style.transform="scale(1.08)";
+    this.style.transition="0.3s";
+
+});
+
+
+
+profileImage.addEventListener("mouseleave",function(){
+
+    this.style.transform="scale(1)";
+
+});
+
+
+
+</script>
+
+
 
 
 {% endblock %}
