@@ -1,7 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
+from .forms import UserForm, ProfileForm
+
+
+
+# =========================
+# Login View
+# =========================
 
 def login_view(request):
 
@@ -16,23 +25,55 @@ def login_view(request):
             password=password
         )
 
-        if user is not None:
+        if user:
+
             login(request, user)
+
+            messages.success(
+                request,
+                "Login successful"
+            )
+
             return redirect("shop:home")
 
-        return render(request, "login.html", {
-            "error": "Invalid username or password"
-        })
 
-    return render(request, "login.html")
+        return render(
+            request,
+            "login.html",
+            {
+                "error": "Invalid username or password"
+            }
+        )
 
 
+    return render(
+        request,
+        "login.html"
+    )
+
+
+
+# =========================
+# Logout View
+# =========================
+
+@login_required
 def logout_view(request):
+
     logout(request)
+
+    messages.success(
+        request,
+        "Logout successful"
+    )
+
     return redirect("shop:home")
 
 
 
+# =========================
+# Register View
+# =========================
 
 def register_view(request):
 
@@ -42,44 +83,179 @@ def register_view(request):
         last_name = request.POST.get("last_name")
         username = request.POST.get("username")
         email = request.POST.get("email")
+
         password = request.POST.get("password")
         confirm_password = request.POST.get("confirm_password")
 
 
         if password != confirm_password:
 
-            return render(request, "register.html", {
-                "error": "Password does not match!"
-            })
+            return render(
+                request,
+                "register.html",
+                {
+                    "error": "Password does not match!"
+                }
+            )
 
 
         if User.objects.filter(username=username).exists():
 
-            return render(request, "register.html", {
-                "error": "Username already exists!"
-            })
+            return render(
+                request,
+                "register.html",
+                {
+                    "error": "Username already exists!"
+                }
+            )
 
 
         if User.objects.filter(email=email).exists():
 
-            return render(request, "register.html", {
-                "error": "Email already exists!"
-            })
+            return render(
+                request,
+                "register.html",
+                {
+                    "error": "Email already exists!"
+                }
+            )
 
 
         user = User.objects.create_user(
-            first_name=first_name,
-            last_name=last_name,
             username=username,
             email=email,
-            password=password
+            password=password,
+            first_name=first_name,
+            last_name=last_name
         )
 
 
-        user.save()
+        # Create Profile Automatically
+        Profile.objects.create(
+            user=user
+        )
 
 
-        return redirect("user_accounts:login")
+        messages.success(
+            request,
+            "Registration successful"
+        )
 
 
-    return render(request, "register.html")
+        return redirect(
+            "user_accounts:login"
+        )
+
+
+    return render(
+        request,
+        "register.html"
+    )
+
+
+
+# =========================
+# Dashboard
+# =========================
+
+@login_required
+def dashboard(request):
+
+    return render(
+        request,
+        "accounts/dashboard.html"
+    )
+
+
+
+# =========================
+# Profile
+# =========================
+
+@login_required
+def profile(request):
+
+    return render(
+        request,
+        "accounts/profile.html",
+        {
+            "user": request.user
+        }
+    )
+
+
+
+# =========================
+# Edit Profile
+# =========================
+
+@login_required
+def edit_profile(request):
+
+    profile, created = Profile.objects.get_or_create(
+        user=request.user
+    )
+
+
+    if request.method == "POST":
+
+        user_form = UserForm(
+            request.POST,
+            instance=request.user
+        )
+
+
+        profile_form = ProfileForm(
+            request.POST,
+            request.FILES,
+            instance=profile
+        )
+
+
+        if (
+            user_form.is_valid()
+            and profile_form.is_valid()
+        ):
+
+            user_form.save()
+
+            profile_form.save()
+
+
+            messages.success(
+                request,
+                "Profile updated successfully"
+            )
+
+
+            return redirect(
+                "user_accounts:profile"
+            )
+
+
+    else:
+
+        user_form = UserForm(
+            instance=request.user
+        )
+
+
+        profile_form = ProfileForm(
+            instance=profile
+        )
+
+
+    context = {
+
+        "user_form": user_form,
+
+        "profile_form": profile_form
+
+    }
+
+
+    return render(
+        request,
+        "accounts/edit_profile.html",
+        context
+    )

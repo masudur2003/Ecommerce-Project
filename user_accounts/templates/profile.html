@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+My Profile
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="container mt-4">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+
+<div class="text-center">
+
+
+<img src="{{request.user.profile.profile_picture.url}}"
+class="profile-img mb-3">
+
+
+<h3>
+{{request.user.get_full_name}}
+</h3>
+
+
+<p>
+<strong>Email:</strong>
+{{request.user.email}}
+</p>
+
+
+<p>
+<strong>Phone:</strong>
+{{request.user.profile.phone}}
+</p>
+
+
+<p>
+<strong>Date of Birth:</strong>
+{{request.user.profile.date_of_birth}}
+</p>
+
+
+<p>
+<strong>Gender:</strong>
+{{request.user.profile.gender}}
+</p>
+
+
+
+<a href="{% url 'accounts:edit_profile' %}"
+class="btn btn-primary">
+
+Edit Profile
+
+</a>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+{% endblock %}
