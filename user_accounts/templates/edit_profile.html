@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 
-
 {% block title %}
 Edit Profile
 {% endblock %}
@@ -12,16 +11,21 @@ Edit Profile
 {% block content %}
 
 
+<div class="container mt-5">
 
-<div class="container mt-4">
+
+<div class="row justify-content-center">
+
+
+<div class="col-md-7">
 
 
 <div class="card shadow">
 
 
-<div class="card-header">
+<div class="card-header bg-dark text-white">
 
-<h4>
+<h4 class="mb-0">
 Update Profile
 </h4>
 
@@ -33,19 +37,48 @@ Update Profile
 
 
 
-<form method="POST"
-enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data">
 
 
 {% csrf_token %}
 
 
 
+
+
+<!-- Profile Image Preview -->
+
+<div class="text-center mb-4">
+
+
+{% if request.user.profile.profile_picture %}
+
+<img 
+id="imagePreview"
+src="{{request.user.profile.profile_picture.url}}"
+width="130"
+height="130"
+class="rounded-circle shadow"
+style="object-fit:cover;"
+>
+
+
+{% endif %}
+
+
+
+</div>
+
+
+
+
+
 <div class="mb-3">
 
-<label>
+<label class="form-label">
 First Name
 </label>
+
 
 {{user_form.first_name}}
 
@@ -53,11 +86,15 @@ First Name
 
 
 
+
+
+
 <div class="mb-3">
 
-<label>
+<label class="form-label">
 Last Name
 </label>
+
 
 {{user_form.last_name}}
 
@@ -65,11 +102,15 @@ Last Name
 
 
 
+
+
+
 <div class="mb-3">
 
-<label>
+<label class="form-label">
 Email
 </label>
+
 
 {{user_form.email}}
 
@@ -78,68 +119,79 @@ Email
 
 
 
+
+
 <div class="mb-3">
 
-<label>
+<label class="form-label">
 Profile Picture
 </label>
 
 
 {{profile_form.profile_picture}}
 
-
 </div>
+
+
+
 
 
 
 
 <div class="mb-3">
 
-<label>
+<label class="form-label">
 Phone Number
 </label>
 
 
 {{profile_form.phone}}
 
-
 </div>
+
+
 
 
 
 
 <div class="mb-3">
 
-<label>
+<label class="form-label">
 Date of Birth
 </label>
 
 
 {{profile_form.date_of_birth}}
 
-
 </div>
+
+
+
 
 
 
 
 <div class="mb-3">
 
-<label>
+<label class="form-label">
 Gender
 </label>
 
 
 {{profile_form.gender}}
 
-
 </div>
 
 
 
 
-<button class="btn btn-success">
 
+
+
+<button type="submit" 
+class="btn btn-success">
+
+<i class="bi bi-check-circle"></i>
 Save Changes
 
 </button>
@@ -155,10 +207,16 @@ Cancel
 
 
 
-
 </form>
 
 
+
+</div>
+
+
+</div>
+
+
 </div>
 
 
@@ -167,6 +225,58 @@ Cancel
 
 </div>
 
+
+
+{% endblock %}
+
+
+
+
+
+
+{% block scripts %}
+
+
+<script>
+
+
+const imageInput = document.querySelector(
+'input[type="file"]'
+);
+
+
+const preview = document.getElementById(
+'imagePreview'
+);
+
+
+
+if(imageInput){
+
+
+imageInput.addEventListener(
+"change",
+function(){
+
+const file = this.files[0];
+
+
+if(file && preview){
+
+preview.src =
+URL.createObjectURL(file);
+
+}
+
+
+});
+
+
+}
+
+
+
+</script>
 
 
 {% endblock %}
