@@ -8,16 +8,20 @@ from shop.models import Product, Category
 
 def home(request):
 
-    products = Product.objects.all()
+    categories = (
+        Category.objects
+        .prefetch_related("products")
+        .filter(products__isnull=False)
+        .distinct()
+    )
 
     return render(
         request,
         "home.html",
         {
-            "products": products
+            "categories": categories
         }
     )
-
 
 
 def about(request):
